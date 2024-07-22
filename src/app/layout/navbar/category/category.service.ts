@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class CategoryService {
 
-  // sada moramo instancirati sve te kategorije 
+  // sada moramo instancirati sve te kategorije
   private categories: Category[] = [
     {
       icon: "eye",
@@ -43,6 +43,12 @@ export class CategoryService {
       icon: "tractor",
       displayName: "Farms",
       technicalName: "FARMS",
+      activated: false
+    },
+    {
+      icon: "snowflake",
+      displayName: "Artic",
+      technicalName: "ARTIC",
       activated: false
     },
     {
@@ -111,12 +117,24 @@ export class CategoryService {
       technicalName: "CAVES",
       activated: false
     },
+    {
+      icon: "champagne-glasses",
+      displayName: "Luxes",
+      technicalName: "LUXES",
+      activated: false
+    },
+    {
+      icon: "kitchen-set",
+      displayName: "Chef",
+      technicalName: "CHEF",
+      activated: false
+    },
   ];
 
   private changeCategory$: BehaviorSubject<Category> = new BehaviorSubject<Category>(this.getCategoriesByDefault());
   changeCategoryObs = this.changeCategory$.asObservable();
 
-  // korisiti cemo notifiy konponent koja se subscrib "changeCategoryObs" observable 
+  // korisiti cemo notifiy konponent koja se subscrib "changeCategoryObs" observable
 
   changeCategory(category : Category): void {
     this.changeCategory$.next(category);
