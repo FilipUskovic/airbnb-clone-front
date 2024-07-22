@@ -6,6 +6,7 @@ import {MenuModule} from 'primeng/menu'
 import { CategoryComponent } from './category/category.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import {DialogService} from 'primeng/dynamicdialog'
+import { MenuItem } from 'primeng/api';
 
 
 @Component({
@@ -22,9 +23,29 @@ import {DialogService} from 'primeng/dynamicdialog'
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent implements OnInit {
- 
+
+  location: string = "Anywhere";
+  guest: string = "Add guests";
+  dates: string = "Any week";
+
+  // login () => this.authService.login()
+  // loginout () => this.authService.logOut()
+
+  currentMenuItems: MenuItem[] | undefined = [];
+
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+   this.fetchMenu();
+  }
+  fetchMenu() {
+    return [
+      {
+        label: "Sign Up",
+        styleClass: "font-bold"
+      },
+      {
+        label: "Log in",
+      }
+  ];
   }
 
 }
