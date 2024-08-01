@@ -1,6 +1,6 @@
 import {Component, EventEmitter, inject, input, OnInit, Output} from '@angular/core';
-import {Category, CategoryName} from "../../../layout/navbar/category/category.model";
-import {CategoryService} from "../../../layout/navbar/category/category.service";
+import {Category, CategoryName} from "../../../../layout/navbar/category/category.model";
+import {CategoryService} from "../../../../layout/navbar/category/category.service";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 
 @Component({
