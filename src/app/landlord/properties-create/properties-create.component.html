@@ -25,6 +25,12 @@
       </app-info-step>
       </div>
     }
+    @case (PHOTOS){
+      <app-picture-step [pictures]="newListing.pictures"
+                        (pictureChange)="onPictureChange($event)"
+                        (stepValidityChange)="onValidityChange($event)">
+      </app-picture-step>
+    }
   }
     </div>
 <app-footer-step [currentStep]="currentStep" [isAllStepsVailid]="isAllStepsValid()"
