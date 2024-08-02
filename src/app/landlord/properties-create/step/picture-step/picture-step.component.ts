@@ -18,7 +18,6 @@ import {NewListingPicture} from "../../../model/picture.model";
 export class PictureStepComponent {
 
   pictures = input.required<Array<NewListingPicture>>();
-
   @Output()
   pictureChange = new EventEmitter<Array<NewListingPicture>>();
   @Output()
@@ -54,7 +53,7 @@ export class PictureStepComponent {
   }
 
   private validatePictures() {
-    if (this.pictures.length >= 5) {
+    if (this.pictures().length >= 5) {
       this.stepValidityChange.emit(true);
     } else {
       this.stepValidityChange.emit(false);
