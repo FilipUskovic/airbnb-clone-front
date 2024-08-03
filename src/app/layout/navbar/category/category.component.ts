@@ -15,14 +15,12 @@ import {filter, map} from "rxjs";
 export class CategoryComponent implements OnInit {
 
   categoryService = inject(CategoryService);
-
   // setiram vrijednosti za pripremu tj pohranu
   categories : Category[] | undefined;
 
   isHome = false;
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
-
   currentActivatedCategory = this.categoryService.getCategoriesByDefault();
 
   ngOnInit(): void {
@@ -38,27 +36,30 @@ export class CategoryComponent implements OnInit {
 
   private listenRouter() {
     this.router.events.pipe(
-      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
-    ).subscribe({
-      next: (event: NavigationEnd) => {
-        this.isHome = event.url.split("?")[0] === "/";
-        if (this.isHome && event.url.indexOf("?") === -1) {
-          const categoryByTehnicalName = this.categoryService.getCategoryByTehnicalName("All");
-          this.categoryService.changeCategory(categoryByTehnicalName!);
+      filter((evt): evt is NavigationEnd => evt instanceof NavigationEnd)
+    )
+      .subscribe({
+        next: (evt: NavigationEnd) => {
+          this.isHome = evt.url.split("?")[0] === "/";
+          if (this.isHome && evt.url.indexOf("?") === -1) {
+            const categoryByTechnicalName = this.categoryService.getCategoryByTehnicalName("ALL");
+            this.categoryService.changeCategory(categoryByTechnicalName!);
+          }
+        },
+      });
+    this.activatedRoute.queryParams
+      .pipe(
+        map(params => params["category"])
+      )
+      .subscribe({
+        next: (categoryName: CategoryName) => {
+          const category = this.categoryService.getCategoryByTehnicalName(categoryName);
+          if (category) {
+            this.activateCategory(category);
+            this.categoryService.changeCategory(category);
+          }
         }
-      },
-    });
-    this.activatedRoute.queryParams.pipe(
-      map(params => params['category'])
-    ).subscribe({
-      next: (categoryName: CategoryName) => {
-        const category = this.categoryService.getCategoryByTehnicalName(categoryName);
-        if(category){
-          this.activateCategory(category);
-          this.categoryService.changeCategory(category!);
-        }
-      }
-    })
+      })
   }
 
   private activateCategory(category: Category) {

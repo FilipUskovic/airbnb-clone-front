@@ -11,8 +11,8 @@ export class CategoryService {
   private categories: Category[] = [
     {
       icon: "eye",
-      displayName: "All",
-      technicalName: "All",
+      displayName: "ALL",
+      technicalName: "ALL",
       activated: false
     },
     {

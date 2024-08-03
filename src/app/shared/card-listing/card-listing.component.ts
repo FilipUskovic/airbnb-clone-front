@@ -4,7 +4,6 @@ import {BookedListing} from "../../tenant/model/booking.model";
 import {Router} from "@angular/router";
 import {CategoryService} from "../../layout/navbar/category/category.service";
 import {CountryService} from "../../landlord/properties-create/step/country.service";
-import {query} from "@angular/animations";
 import {CurrencyPipe, DatePipe} from "@angular/common";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 
@@ -48,7 +47,7 @@ export class CardListingComponent {
         .subscribe({
           next: country => {
             if(listing){
-              this.listing().location = country.region + " " + country.name.common;
+              this.listing().location = country.region + ", " + country.name.common;
             }
           }
         })
