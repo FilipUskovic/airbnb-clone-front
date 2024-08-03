@@ -44,3 +44,18 @@ export interface CardListing {
   loading: boolean
 }
 
+export interface Listing {
+  description: DescriptionVO,
+  pictures: Array<DisplayPicture>,
+  info: NewListingInfo,
+  price: PriceVO,
+  category: CategoryName,
+  location: string,
+  landlord: LandLordListing
+}
+
+export interface LandLordListing{
+  firstName: string,
+  imageUrl: string
+}
+
