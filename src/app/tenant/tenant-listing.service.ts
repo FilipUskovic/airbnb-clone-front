@@ -47,7 +47,7 @@ export class TenantListingService {
   }
 
   resetGetOneByPublicId(): void {
-    this.getOneByPublicId$.set(State.Builder<Listing>().forInit());
+    this.getOneByPublicId$.set(State.Builder<Listing>().forInit())
   }
 
 }

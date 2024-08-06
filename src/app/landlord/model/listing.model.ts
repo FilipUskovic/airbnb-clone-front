@@ -45,9 +45,9 @@ export interface CardListing {
 }
 
 export interface Listing {
-  description: DescriptionVO,
+  description: Description,
   pictures: Array<DisplayPicture>,
-  info: NewListingInfo,
+  infos: NewListingInfo,
   price: PriceVO,
   category: CategoryName,
   location: string,
