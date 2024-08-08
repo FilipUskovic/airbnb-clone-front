@@ -8,7 +8,6 @@ export interface NewListingInfo {
   beds: BedsVO,
   baths: BathsVO
 }
-
 // bit ce main objeck s kojim cemo kreirati lisitne
 export interface NewListing{
   category: CategoryName,
@@ -53,7 +52,6 @@ export interface Listing {
   location: string,
   landlord: LandLordListing
 }
-
 export interface LandLordListing{
   firstName: string,
   imageUrl: string

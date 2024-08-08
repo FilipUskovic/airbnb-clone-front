@@ -11,6 +11,7 @@ import {ToastService} from "../toast.service";
 import {AuthService} from "../../core/auth/auth.service";
 import {User} from "../../core/model/user.model";
 import {PropertiesCreateComponent} from "../../landlord/properties-create/properties-create.component";
+import {SearchComponent} from "../../tenant/search/search.component";
 
 
 @Component({
@@ -111,6 +112,18 @@ export class NavbarComponent implements OnInit {
         modal: true,
         showHeader: true
       })
+  }
+
+  // dodao sam novi open dialog za search, i moramo ga bindati kada user klikne to je u navbar html
+  openNewSearch(): void {
+    this.ref = this.dialogService.open(SearchComponent, {
+      width: "40%",
+      header: "Search",
+      closable: true,
+      focusOnShow: true,
+      modal: true,
+      showHeader: true
+    });
   }
 
 }

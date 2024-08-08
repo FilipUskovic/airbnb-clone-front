@@ -5,6 +5,8 @@ import {State} from "../core/model/state.model";
 import {createPaginationOption, Page, Pagination} from "../core/model/request.model";
 import {CategoryName} from "../layout/navbar/category/category.model";
 import {environment} from "../../environments/environment";
+import {Subject} from "rxjs";
+import {Search} from "./search/search.model";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,12 @@ export class TenantListingService {
   private getOneByPublicId$: WritableSignal<State<Listing>>
     = signal(State.Builder<Listing>().forInit());
   getOneByPublicIdSignal = computed(() => this.getOneByPublicId$())
+
+  // ne zelimo da signal svaki put emmita vrijednost kada je komponenta instancirana
+  private search$: Subject<State<Page<CardListing>>>
+  = new Subject<State<Page<CardListing>>>(); // instancuran, nema default vrijednost
+   // public observable, nemoze mozemo ga modificirati samo pozivanje servisa
+   search = this.search$.asObservable();
 
   constructor() { }
 
@@ -50,4 +58,12 @@ export class TenantListingService {
     this.getOneByPublicId$.set(State.Builder<Listing>().forInit())
   }
 
+  searchListing(newSearch: Search, pageRequest: Pagination): void {
+    const params = createPaginationOption(pageRequest);
+    this.http.post<Page<CardListing>>(`${environment.API_URL}/tenant-listing/search`, newSearch,{params})
+      .subscribe({
+        next: displayListingCard => this.search$.next(State.Builder<Page<CardListing>>().forSuccess(displayListingCard)),
+        error: err => this.search$.next(State.Builder<Page<CardListing>>().forError(err))
+      });
+  }
 }
