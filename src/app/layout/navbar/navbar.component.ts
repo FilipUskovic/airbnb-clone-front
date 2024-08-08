@@ -12,6 +12,8 @@ import {AuthService} from "../../core/auth/auth.service";
 import {User} from "../../core/model/user.model";
 import {PropertiesCreateComponent} from "../../landlord/properties-create/properties-create.component";
 import {SearchComponent} from "../../tenant/search/search.component";
+import {ActivatedRoute} from "@angular/router";
+import dayjs from "dayjs";
 
 
 @Component({
@@ -30,11 +32,12 @@ import {SearchComponent} from "../../tenant/search/search.component";
 export class NavbarComponent implements OnInit {
 
   location: string = "Anywhere";
-  guest: string = "Add guests";
+  guests: string = "Add guests";
   dates: string = "Any week";
 
   toastServise = inject(ToastService);
   authService = inject(AuthService);
+  activatedRoute = inject(ActivatedRoute);
 
   login = () => this.authService.login()
   logout = () => this.authService.logout();
@@ -57,6 +60,7 @@ export class NavbarComponent implements OnInit {
     this.authService.fetch(false);
   // this.fetchMenu();
   // this.toastServise.send({severity: "info", summary: "Welcome fico"})
+    this.extractInformationForSearch();
   }
 
 
@@ -126,4 +130,22 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  private extractInformationForSearch(): void {
+    this.activatedRoute.queryParams.subscribe({
+      next: params => {
+        if (params["location"]) {
+          this.location = params["location"];
+          this.guests = params["guests"] + " Guests";
+          this.dates = dayjs(params["startDate"]).format("MMM-DD")
+            + " to " + dayjs(params["endDate"]).format("MMM-DD");
+        } else if (this.location !== "Anywhere") {
+          this.location = "Anywhere";
+          this.guests = "Add guests";
+          this.dates = "Any week";
+        }
+      }
+    })
+  }
+
 }
+
