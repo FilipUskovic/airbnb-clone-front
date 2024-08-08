@@ -29,7 +29,7 @@ export class BookingService {
   }
 
   checkAvailability(publicId: string): void {
-    const params = new HttpParams().set("publicId", publicId);
+    const params = new HttpParams().set("listingPublicId", publicId);
     this.http.get<Array<BookedDatesDTOFromServer>>(`${environment.API_URL}/booking/check-availability`, {params})
       .pipe(
         map(this.mapDateToDayJS())
@@ -54,5 +54,9 @@ export class BookingService {
       startDate: dayjs(dto.startDate),
       endDate: dayjs(dto.endDate),
     };
+  }
+
+  resetCreateBooking() {
+    this.createBooking$.set(State.Builder<boolean>().forInit());
   }
 }
